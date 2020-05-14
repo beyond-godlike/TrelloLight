@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TrelloLight</string>
+
+    <string name="add_card">+</string>
+    <string name="save_board">save</string>
+    <string name="done">ok</string>
+    <string name="delete">delete</string>
+    <string name="cancel">cancel</string>
+    <string name="board_title_hint">enter boards name</string>
+</resources>
