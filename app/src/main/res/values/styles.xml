@@ -1,36 +1,90 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TrelloBtStyle" parent="Widget.AppCompat.Button">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:minWidth">110dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginBottom">20dp</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:textColor">@color/colorAccent</item>
+    <!--                              MainActivity START                                         -->
+    <style name="LinearLayoutMainActivity">
+        <item name="android:layout_marginRight">@dimen/spacing_default</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_default</item>
+        <item name="android:layout_marginTop">@dimen/spacing_default</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_default</item>
     </style>
 
-    <style name="TrelloEditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:layout_marginTop">15dp</item>
-        <item name="android:layout_marginLeft">25dp</item>
-        <item name="android:layout_marginRight">25dp</item>
+    <style name="FabMainActivity">
+        <item name="android:layout_marginBottom">@dimen/spacing_fab</item>
+        <item name="android:layout_marginRight">@dimen/spacing_fab</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:src">@drawable/add</item>
+        <item name="fabSize">normal</item>
+        <item name="backgroundTint">@color/fab_color</item>
+        <item name="borderWidth">@dimen/border_width</item>
+    </style>
+
+    <!--                              MainActivity END                                           -->
+    <!--                              BoardActivity START                                        -->
+    <style name="TrelloLight.RecyclerViewAppearance" parent="Widget.AppCompat.ListView">
+        <item name="android:layout_margin">@dimen/spacing_default</item>
+        <item name="android:animateOnClick">true</item>
+    </style>
+
+    <!--                              BoardActivity END                                          -->
+    <!--                              Commons START                                              -->
+
+    <style name="TrelloLight.ButtonAppearance" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_marginTop">@dimen/spacing_default</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_default</item>
+        <item name="android:layout_marginStart">@dimen/spacing_default</item>
+        <item name="android:paddingTop">@dimen/padding_button</item>
+        <item name="android:paddingBottom">@dimen/padding_button</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
+        <item name="android:enabled">true</item>
+        <item name="android:background">@drawable/button_states</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="TrelloLight.EditTextAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">@dimen/padding_et_default</item>
+        <item name="android:layout_marginStart">@dimen/spacing_default</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_default</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <style name="TrelloLight.TextViewAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">@dimen/padding_et_default</item>
+        <item name="android:layout_marginStart">@dimen/spacing_default</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_default</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <style name="TrelloLight.CardViewAppearance" parent="CardView.Light">
+        <item name="android:padding">@dimen/padding_cv_default</item>
+        <item name="android:layout_marginRight">@dimen/spacing_minimum</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_minimum</item>
+        <item name="android:layout_marginTop">@dimen/spacing_small</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="cardCornerRadius">0.2dp</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardPreventCornerOverlap">true</item>
     </style>
 
 </resources>

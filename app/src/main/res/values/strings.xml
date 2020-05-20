@@ -3,8 +3,10 @@
 
     <string name="add_card">+</string>
     <string name="save_board">save</string>
-    <string name="done">ok</string>
+    <string name="done">OK</string>
     <string name="delete">delete</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="board_title_hint">enter boards name</string>
+    <string name="title_hint">title</string>
+    <string name="description_hint">description</string>
 </resources>

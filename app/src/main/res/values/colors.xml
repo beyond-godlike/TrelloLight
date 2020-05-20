@@ -5,4 +5,8 @@
     <color name="colorPrimaryLight">#ccb0f7</color>
     <color name="colorAccent">#ebebeb</color>
     <color name="fab_color">#ccb0f7</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBtDisabled">#cad3df</color>
+    <color name="colorBtEnabled">#875fc6</color>
 </resources>

@@ -14,7 +14,8 @@ class TasksListAdapter(private val tasks: MutableList<Task>) :
     RecyclerView.Adapter<TasksListAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_list_item, null)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_list_item, parent, false)
+        view.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
         return CustomViewHolder(view)
     }
 
@@ -41,7 +42,7 @@ class TasksListAdapter(private val tasks: MutableList<Task>) :
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val itemTitle: TextView = itemView.findViewById(R.id.item_task_title)
+        val itemTitle: TextView = itemView.findViewById(R.id.tvTitle)
 
     }
 }

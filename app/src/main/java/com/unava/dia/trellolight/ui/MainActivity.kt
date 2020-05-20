@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.unava.dia.trellolight.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.AppConstants.Companion.NEW_BOARD
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity(),
     RecyclerItemClickListener.OnRecyclerViewItemClickListener {
     private var boardsListAdapter: BoardsListAdapter? = null
     private var boardRepository: BoardRepository? = null
-    private var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,20 +41,23 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun setupRecyclerView() {
-        recyclerView = findViewById(R.id.board_list)
-        recyclerView!!.layoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView!!.addOnItemTouchListener(RecyclerItemClickListener(this, this))
+        val displayMetrics = this.applicationContext.resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        val columns = (dpWidth / (200 + 20)).toInt()
+
+        rvMain!!.layoutManager =
+            StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL)
+        rvMain!!.addOnItemTouchListener(RecyclerItemClickListener(this, this))
     }
 
     private fun updateBoardList() {
         boardRepository!!.boards.observe(this,
             Observer<List<Board>> { boards ->
                 if (boards.isNotEmpty()) {
-                    recyclerView!!.visibility = View.VISIBLE
+                    rvMain!!.visibility = View.VISIBLE
                     if (boardsListAdapter == null) {
                         boardsListAdapter = BoardsListAdapter(boards.toMutableList())
-                        recyclerView!!.adapter = boardsListAdapter
+                        rvMain!!.adapter = boardsListAdapter
 
                     } else
                         boardsListAdapter!!.addBoards(boards)
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun updateEmptyView() {
-        recyclerView!!.visibility = View.GONE
+        rvMain!!.visibility = View.GONE
     }
 
     override fun onItemClick(parentView: View, childView: View, position: Int) {

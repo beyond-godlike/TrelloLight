@@ -6,25 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".ui.TaskActivity">
 
+    <Button
+        android:id="@+id/btDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btDelete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/TrelloLight.ButtonAppearance"
+        />
+
+    <Button
+        android:id="@+id/btDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btDone"
+        style="@style/TrelloLight.ButtonAppearance"
+        />
+
     <LinearLayout
         android:id="@+id/taskLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_default"
         android:background="@android:color/white"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/btDone"
+        >
 
         <EditText
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="title"
-            style="@style/TrelloEditTextStyle"
             android:inputType="textCapSentences|textMultiLine"
             android:singleLine="false"
+            android:hint="@string/title_hint"
+            style="@style/TrelloLight.EditTextAppearance"
             />
 
 
@@ -32,35 +58,12 @@
             android:id="@+id/etDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TrelloEditTextStyle"
-            android:hint="description"
             android:inputType="textCapSentences|textMultiLine"
-            android:singleLine="false" />
+            android:singleLine="false"
+            style="@style/TrelloLight.EditTextAppearance"
+            android:hint="@string/description_hint"
+            />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btDone"
-        style="@style/TrelloBtStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/done"
-        app:layout_constraintTop_toBottomOf="@id/taskLayout"
-        app:layout_constraintEnd_toStartOf="@+id/btDelete"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btDelete"
-        style="@style/TrelloBtStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"
-        app:layout_constraintTop_toBottomOf="@id/taskLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btDone"
-        />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.unava.dia.trellolight.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.AppConstants.Companion.NEW_BOARD
 import com.unava.dia.trellolight.AppConstants.Companion.TASK_ID
@@ -19,14 +18,11 @@ import com.unava.dia.trellolight.repository.TaskRepository
 import com.unava.dia.trellolight.util.RecyclerItemClickListener
 import kotlinx.android.synthetic.main.activity_board.*
 
-// отображает текущую доску (boardId)
-// удаляет / добавляет таск для текущей доски
 
 class BoardActivity : AppCompatActivity(),
     RecyclerItemClickListener.OnRecyclerViewItemClickListener {
 
     private var boardId: Int? = null
-    private var recyclerView: RecyclerView? = null
     private var tasksListAdapter: TasksListAdapter? = null
 
     private var boardRepository: BoardRepository? = null
@@ -75,24 +71,6 @@ class BoardActivity : AppCompatActivity(),
         }
     }
 
-    /* LEGACY do not delete
-    private fun loadCurrentBoardEx()  {
-
-        boardRepository!!.getBoard(boardId)?.observe(this,
-            Observer<Board>  { b ->
-
-            }
-        )
-    }
-
-
-    private fun insertBoardEx() {
-        val mboard = Board("new board")
-        boardRepository!!.insertBoard(mboard)
-    }
- */
-
-
     private fun updateBoard() {
         boardRepository!!.getBoard(boardId!!)?.observe(this,
             Observer<Board> { b ->
@@ -110,17 +88,15 @@ class BoardActivity : AppCompatActivity(),
     }
 
     private fun setupRecyclerView() {
-        recyclerView = findViewById(R.id.board_task_list)
-        recyclerView!!.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView!!.addOnItemTouchListener(RecyclerItemClickListener(this, this))
+        rvBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvBoard.addOnItemTouchListener(RecyclerItemClickListener(this, this))
     }
 
     private fun updateTaskList(list: List<Task>) {
         if (list.isNotEmpty()) {
             if (tasksListAdapter == null) {
                 tasksListAdapter = TasksListAdapter(list.toMutableList())
-                recyclerView?.adapter = tasksListAdapter
+                rvBoard.adapter = tasksListAdapter
                 tasksListAdapter?.addTasks(list)
             }
         }

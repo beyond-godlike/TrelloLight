@@ -1,0 +1,15 @@
+<resources>
+    <dimen name="spacing_fab">25dp</dimen>
+    <dimen name="spacing_default">25dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_minimum">4dp</dimen>
+
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="spacing_elevation">4dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="border_width">2dp</dimen>
+    <dimen name="padding_button">13dp</dimen>
+    <dimen name="padding_et_default">10dp</dimen>
+    <dimen name="padding_cv_default">16dp</dimen>
+</resources>

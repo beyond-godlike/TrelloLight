@@ -1,10 +1,7 @@
 package com.unava.dia.trellolight.ui
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.unava.dia.trellolight.AppConstants.Companion.BOARD_ID
@@ -38,7 +35,6 @@ class TaskActivity : AppCompatActivity() {
             finish()
         }
         btDone.setOnClickListener {
-            hideKeyboard(this)
             if (taskfId == 0) {
                 taskRepository!!.insertTask(
                     Task(
@@ -63,8 +59,6 @@ class TaskActivity : AppCompatActivity() {
                 )
             }
         }
-
-        openKeyboard(applicationContext)
     }
 
     private fun updateTask() {
@@ -83,20 +77,4 @@ class TaskActivity : AppCompatActivity() {
         taskRepository!!.insertTask(Task(" task title", "task.description", boardId))
     }
      */
-
-    private fun openKeyboard(context: Context) {
-        Handler().postDelayed({
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInput(
-                InputMethodManager.SHOW_FORCED,
-                InputMethodManager.HIDE_IMPLICIT_ONLY
-            )
-        }, 500)
-    }
-
-    private fun hideKeyboard(activity: Activity) {
-        val inputMethodManager =
-            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
-    }
 }

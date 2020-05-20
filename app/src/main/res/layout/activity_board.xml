@@ -8,36 +8,39 @@
 
     <Button
         android:id="@+id/btSaveBoard"
-        style="@style/TrelloBtStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_board"
         app:layout_constraintEnd_toStartOf="@+id/btDeleteBoard"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/TrelloLight.ButtonAppearance"
+        />
 
     <Button
         android:id="@+id/btDeleteBoard"
-        style="@style/TrelloBtStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/delete"
         app:layout_constraintEnd_toStartOf="@+id/btAddCard"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btSaveBoard"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/delete"
+        style="@style/TrelloLight.ButtonAppearance"
+        />
 
     <Button
         android:id="@+id/btAddCard"
-        style="@style/TrelloBtStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btDeleteBoard"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/add_card"
+        style="@style/TrelloLight.ButtonAppearance"
+        />
 
     <LinearLayout
         android:id="@+id/boardLayout"
@@ -47,20 +50,23 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btDeleteBoard">
+        app:layout_constraintTop_toBottomOf="@id/btDeleteBoard"
+        >
 
         <EditText
             android:id="@+id/etBoardName"
-            style="@style/TrelloEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/board_title_hint" />
+            android:hint="@string/board_title_hint"
+            style="@style/TrelloLight.EditTextAppearance"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/board_task_list"
+            android:id="@+id/rvBoard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="25dp" />
+            style="@style/TrelloLight.RecyclerViewAppearance"
+            />
 
     </LinearLayout>
 

@@ -40,6 +40,6 @@ class BoardsListAdapter(private val boards: MutableList<Board>) :
     }
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val itemTitle: TextView = itemView.findViewById(R.id.item_title)
+        val itemTitle: TextView = itemView.findViewById(R.id.tvTitle)
     }
 }

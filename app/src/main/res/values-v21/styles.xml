@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--                              MainActivity                                               -->
+    <style name="FabMainActivity">
+        <item name="android:layout_marginBottom">@dimen/spacing_fab</item>
+        <item name="android:layout_marginRight">@dimen/spacing_fab</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:src">@drawable/add</item>
+        <item name="fabSize">normal</item>
+        <item name="borderWidth">@dimen/border_width</item>
+        <item name="android:backgroundTint">@color/fab_color</item>
+        <item name="android:elevation">@dimen/spacing_elevation</item>
+    </style>
+</resources>
