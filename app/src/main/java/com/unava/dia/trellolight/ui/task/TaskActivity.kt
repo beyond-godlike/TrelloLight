@@ -1,17 +1,25 @@
-package com.unava.dia.trellolight.ui
+package com.unava.dia.trellolight.ui.task
 
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.unava.dia.trellolight.AppConstants.Companion.BOARD_ID
-import com.unava.dia.trellolight.AppConstants.Companion.TASK_ID
+import androidx.lifecycle.ViewModelProvider
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Task
 import com.unava.dia.trellolight.repository.TaskRepository
+import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
+import com.unava.dia.trellolight.utils.AppConstants.Companion.TASK_ID
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_task.*
+import javax.inject.Inject
 
 class TaskActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModel: TaskViewModel
 
     private var boardId = 0
     private var taskfId = 0
@@ -21,6 +29,8 @@ class TaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
+        AndroidInjection.inject(this)
+        this.bindViewModel()
 
         taskRepository = TaskRepository(applicationContext)
 
@@ -59,6 +69,15 @@ class TaskActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun bindViewModel() {
+        this.viewModel = ViewModelProvider(this, viewModelFactory).get(TaskViewModel::class.java)
+        this.observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        // TODO not implemented in this version
     }
 
     private fun updateTask() {

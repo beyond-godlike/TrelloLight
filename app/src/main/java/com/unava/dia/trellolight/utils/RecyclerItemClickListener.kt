@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.util
+package com.unava.dia.trellolight.utils
 
 import android.content.Context
 import android.view.GestureDetector

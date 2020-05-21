@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.ui
+package com.unava.dia.trellolight.ui.main
 
 import android.app.Activity
 import android.content.Intent
@@ -6,24 +6,36 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.unava.dia.trellolight.AppConstants.Companion.BOARD_ID
-import com.unava.dia.trellolight.AppConstants.Companion.NEW_BOARD
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Board
 import com.unava.dia.trellolight.repository.BoardRepository
-import com.unava.dia.trellolight.util.RecyclerItemClickListener
+import com.unava.dia.trellolight.ui.board.BoardActivity
+import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
+import com.unava.dia.trellolight.utils.AppConstants.Companion.NEW_BOARD
+import com.unava.dia.trellolight.utils.RecyclerItemClickListener
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(),
     RecyclerItemClickListener.OnRecyclerViewItemClickListener {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModel: MainViewModel
+
     private var boardsListAdapter: BoardsListAdapter? = null
     private var boardRepository: BoardRepository? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AndroidInjection.inject(this)
+        this.bindViewModel()
 
         boardRepository = BoardRepository(applicationContext)
         setupRecyclerView()
@@ -33,6 +45,15 @@ class MainActivity : AppCompatActivity(),
             startActivityForResult(intent, Activity.RESULT_OK)
         }
         updateBoardList()
+    }
+
+    private fun bindViewModel() {
+        this.viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        this.observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        // TODO not implemented in this version
     }
 
     override fun onStart() {
@@ -56,7 +77,8 @@ class MainActivity : AppCompatActivity(),
                 if (boards.isNotEmpty()) {
                     rvMain!!.visibility = View.VISIBLE
                     if (boardsListAdapter == null) {
-                        boardsListAdapter = BoardsListAdapter(boards.toMutableList())
+                        boardsListAdapter =
+                            BoardsListAdapter(boards.toMutableList())
                         rvMain!!.adapter = boardsListAdapter
 
                     } else

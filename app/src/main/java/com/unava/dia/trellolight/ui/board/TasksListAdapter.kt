@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.ui
+package com.unava.dia.trellolight.ui.board
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.util.TaskDiffUtil
+import com.unava.dia.trellolight.utils.TaskDiffUtil
 
 class TasksListAdapter(private val tasks: MutableList<Task>) :
     RecyclerView.Adapter<TasksListAdapter.CustomViewHolder>() {

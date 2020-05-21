@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.ui
+package com.unava.dia.trellolight.ui.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Board
-import com.unava.dia.trellolight.util.BoardDiffUtil
+import com.unava.dia.trellolight.utils.BoardDiffUtil
 
 class BoardsListAdapter(private val boards: MutableList<Board>) :
     RecyclerView.Adapter<BoardsListAdapter.CustomViewHolder>() {

@@ -9,7 +9,7 @@ import com.unava.dia.trellolight.dao.BoardDao
 import com.unava.dia.trellolight.dao.TaskDao
 import com.unava.dia.trellolight.data.Board
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.util.TaskListConverter
+import com.unava.dia.trellolight.utils.TaskListConverter
 
 @Database(entities = [Board::class, Task::class], version = 1, exportSchema = false)
 @TypeConverters(TaskListConverter::class)

@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.util
+package com.unava.dia.trellolight.utils
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

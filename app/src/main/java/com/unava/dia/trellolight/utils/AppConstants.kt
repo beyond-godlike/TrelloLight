@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight
+package com.unava.dia.trellolight.utils
 
 interface AppConstants {
     companion object {
