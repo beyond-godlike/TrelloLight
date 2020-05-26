@@ -8,5 +8,5 @@ class MainViewModel @Inject constructor(
     private val context: Context,
     private val model: MainModel
 ) : ViewModel(){
-
+    fun getBoards() = model.findAllBoards()
 }

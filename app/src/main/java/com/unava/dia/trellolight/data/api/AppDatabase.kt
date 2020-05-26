@@ -1,12 +1,12 @@
-package com.unava.dia.trellolight.db
+package com.unava.dia.trellolight.data.api
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.unava.dia.trellolight.dao.BoardDao
-import com.unava.dia.trellolight.dao.TaskDao
+import com.unava.dia.trellolight.data.api.dao.BoardDao
+import com.unava.dia.trellolight.data.api.dao.TaskDao
 import com.unava.dia.trellolight.data.Board
 import com.unava.dia.trellolight.data.Task
 import com.unava.dia.trellolight.utils.TaskListConverter

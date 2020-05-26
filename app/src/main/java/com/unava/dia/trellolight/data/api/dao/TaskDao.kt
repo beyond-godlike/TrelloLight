@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.dao
+package com.unava.dia.trellolight.data.api.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

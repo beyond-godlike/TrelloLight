@@ -2,6 +2,8 @@ package com.unava.dia.trellolight.di
 
 import android.app.Application
 import com.unava.dia.trellolight.TrelloLightApp
+import com.unava.dia.trellolight.di.network.RoomModule
+import com.unava.dia.trellolight.di.useCases.UseCasesModule
 import com.unava.dia.trellolight.di.viewModel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -14,8 +16,9 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AppModule::class,
         ActivityBuilder::class,
-        ViewModelModule::class
-        //UseCasesModule::class
+        ViewModelModule::class,
+        UseCasesModule::class,
+        RoomModule::class
     ]
 )
 interface AppComponent {

@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.repository.TaskRepository
+import com.unava.dia.trellolight.data.api.repository.TaskRepository
 import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.utils.AppConstants.Companion.TASK_ID
 import dagger.android.AndroidInjection

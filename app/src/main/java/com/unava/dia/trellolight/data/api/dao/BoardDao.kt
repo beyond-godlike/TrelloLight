@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.dao
+package com.unava.dia.trellolight.data.api.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -9,8 +9,8 @@ interface BoardDao {
     @Insert
     fun insertBoard(board: Board): Long?
 
-    @Query("SELECT * FROM Board")
-    fun fetchAllBoards(): LiveData<List<Board>>
+    @Query("SELECT * from Board")
+    fun getBoards() : LiveData<List<Board>>
 
     @Query("SELECT * FROM Board WHERE id =:boardId")
     fun getBoard(boardId: Int): LiveData<Board>

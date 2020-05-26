@@ -1,11 +1,10 @@
-package com.unava.dia.trellolight.repository
+package com.unava.dia.trellolight.data.api.repository
 
 import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
-import androidx.room.Room
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.db.AppDatabase
+import com.unava.dia.trellolight.data.api.AppDatabase
 
 
 class TaskRepository(context: Context) {

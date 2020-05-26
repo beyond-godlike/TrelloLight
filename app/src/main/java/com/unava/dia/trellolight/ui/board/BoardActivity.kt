@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Board
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.repository.BoardRepository
-import com.unava.dia.trellolight.repository.TaskRepository
+import com.unava.dia.trellolight.data.api.repository.BoardRepository
+import com.unava.dia.trellolight.data.api.repository.TaskRepository
 import com.unava.dia.trellolight.ui.task.TaskActivity
 import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.utils.AppConstants.Companion.NEW_BOARD
@@ -58,21 +58,21 @@ class BoardActivity : AppCompatActivity(),
             startActivityForResult(intent, Activity.RESULT_OK)
         }
         btDeleteBoard.setOnClickListener {
-            boardRepository!!.deleteBoard(boardId!!)
+            viewModel.deleteBoard(boardId!!)
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
         btSaveBoard.setOnClickListener {
             if (intent.getBooleanExtra(NEW_BOARD, false)) {
-                boardRepository!!.insertBoard(Board(etBoardName!!.text.toString()))
+                viewModel.insertBoard(etBoardName!!.text.toString())
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             } else {
-                boardRepository!!.getBoard(boardId!!)?.observe(this,
+                boardRepository!!.getBoard(boardId!!).observe(this,
                     Observer<Board> { b ->
                         if (b != null) {
                             b.title = etBoardName!!.text.toString()
-                            boardRepository!!.updateBoard(b)
+                            viewModel.updateBoard(b)
                             setResult(Activity.RESULT_OK, intent)
                             finish()
                         }
