@@ -3,23 +3,28 @@ package com.unava.dia.trellolight.ui.board
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.unava.dia.trellolight.data.Board
-import com.unava.dia.trellolight.data.api.repository.BoardRepository
 import javax.inject.Inject
 
 class BoardViewModel @Inject constructor(
     private val context: Context,
     private val model: BoardModel
 ) : ViewModel(){
-    var boardRepository: BoardRepository? = BoardRepository(context)
+
+    fun getTasks() = model.findAllTasks()
+
+    fun getBoard(id: Int) = model.findBoard(id)
+
     fun deleteBoard(id: Int) {
-        boardRepository!!.deleteBoard(id)
+        model.deleteBoard(id)
     }
 
     fun updateBoard(board: Board) {
-        boardRepository!!.updateBoard(board)
+        model.updateBoard(board)
     }
 
     fun insertBoard(text: String) {
-        boardRepository!!.insertBoard(Board(text))
+        model.insertBoard(text)
     }
+    fun findReposForTask (boardId: Int) = model.findReposForTask(boardId)
+
 }

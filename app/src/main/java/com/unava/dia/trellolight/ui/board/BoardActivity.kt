@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,8 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Board
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.data.api.repository.BoardRepository
-import com.unava.dia.trellolight.data.api.repository.TaskRepository
 import com.unava.dia.trellolight.ui.task.TaskActivity
 import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.utils.AppConstants.Companion.NEW_BOARD
@@ -34,23 +33,14 @@ class BoardActivity : AppCompatActivity(),
     private var boardId: Int? = null
     private var tasksListAdapter: TasksListAdapter? = null
 
-    private var boardRepository: BoardRepository? = null
-    private var taskRepository: TaskRepository? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board)
         AndroidInjection.inject(this)
-        this.bindViewModel()
-
+        // should be before bindViewModel()
         boardId = intent.getIntExtra(BOARD_ID, 0)
-
-        boardRepository = BoardRepository(applicationContext)
-        taskRepository = TaskRepository(applicationContext)
-
-
+        this.bindViewModel()
         setupRecyclerView()
-        updateBoard()
 
         btAddCard.setOnClickListener {
             val intent = Intent(this@BoardActivity, TaskActivity::class.java)
@@ -68,7 +58,7 @@ class BoardActivity : AppCompatActivity(),
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             } else {
-                boardRepository!!.getBoard(boardId!!).observe(this,
+                viewModel.getBoard(boardId!!).observe(this,
                     Observer<Board> { b ->
                         if (b != null) {
                             b.title = etBoardName!!.text.toString()
@@ -88,23 +78,21 @@ class BoardActivity : AppCompatActivity(),
     }
 
     private fun observeViewModel() {
-        // TODO not implemented in this version
-    }
-
-    private fun updateBoard() {
-        boardRepository!!.getBoard(boardId!!)?.observe(this,
-            Observer<Board> { b ->
-                if (b != null) {
-                    etBoardName!!.setText(b.title)
+        if(boardId != null) {
+            viewModel.getBoard(boardId!!).observe(this,
+                Observer<Board> { b ->
+                    if (b != null) {
+                        etBoardName!!.setText(b.title)
+                    }
                 }
-            }
-        )
-        val tasks = taskRepository!!.findRepositoriesForTask(boardId!!)
-        tasks!!.observe(this, Observer<List<Task>> { task ->
-            if (task != null) {
-                updateTaskList(task)
-            }
-        })
+            )
+            viewModel.findReposForTask(boardId!!)?.observe(this, Observer<List<Task>> { task ->
+                if (task != null) {
+                    updateTaskList(task)
+                }
+            })
+        }
+        else Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupRecyclerView() {
@@ -129,10 +117,5 @@ class BoardActivity : AppCompatActivity(),
         intent.putExtra(TASK_ID, task.id)
         intent.putExtra(BOARD_ID, boardId)
         startActivityForResult(intent, Activity.RESULT_OK)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        updateBoard()
     }
 }

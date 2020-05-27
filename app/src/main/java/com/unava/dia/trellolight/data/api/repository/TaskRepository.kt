@@ -5,77 +5,49 @@ import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.unava.dia.trellolight.data.Task
 import com.unava.dia.trellolight.data.api.AppDatabase
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 class TaskRepository(context: Context) {
 
+    private val parentJob = Job()
+    private val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Default
+    private val scope = CoroutineScope(coroutineContext)
+
     private val db: AppDatabase = AppDatabase.getAppDataBase(context)!!
 
-    val tasks: LiveData<List<Task>>
-        get() = db.taskDao().fetchAllTasks()
+    fun getTasks() = db.taskDao().getTasks()
+    fun getTask(id: Int) = db.taskDao().getTask(id)
 
-    @JvmOverloads
-    fun insertTask(
-        title: String,
-        description: String,
-        boardId: Int
-    ) {
-        insertTask(Task(title, description, boardId))
+    private fun getTaskAsync(id: Int): Task? = runBlocking(Dispatchers.Default) {
+        return@runBlocking async { db.taskDao().getTaskAsync(id) }.await()
+    }
+
+    fun insertTask(title: String, description: String, boardId: Int) {
+        scope.launch  { db.taskDao().insertTask(Task(title, description, boardId)) }
     }
 
     fun insertTask(task: Task) {
-        object : AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                db.taskDao().insertTask(task)
-                return null
-            }
-        }.execute()
+        scope.launch  { db.taskDao().insertTask(task) }
     }
 
     fun updateTask(task: Task) {
-        object : AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                db.taskDao().updateTask(task)
-                return null
-            }
-        }.execute()
+        scope.launch  { db.taskDao().updateTask(task) }
+    }
+
+    fun deleteTask(task: Task) {
+        scope.launch  { db.taskDao().deleteTask(task) }
     }
 
     fun deleteTask(id: Int) {
         val task = getTaskAsync(id)
-        object : AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                db.taskDao().deleteTask(task)
-                return null
-            }
-        }.execute()
+        scope.launch  { task?.let { db.taskDao().deleteTask(it) } }
     }
 
-    fun deleteTask(note: Task) {
-        object : AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                db.taskDao().deleteTask(note)
-                return null
-            }
-        }.execute()
-    }
-
-    fun getTask(id: Int): LiveData<Task>? {
-        return db.taskDao().getTask(id)
-    }
 
     fun findRepositoriesForTask(boardId: Int): LiveData<List<Task>>? {
         return db.taskDao().getTasksForBoard(boardId)
-    }
-
-    private fun getTaskAsync(tId: Int): Task {
-        return GetBoardById(db, tId).execute().get()
-    }
-
-    private class GetBoardById(var taskDatabase: AppDatabase, var tId: Int) :
-        AsyncTask<Void, Void, Task>() {
-        override fun doInBackground(vararg boards: Void): Task? {
-            return taskDatabase.taskDao().getTaskAsync(tId)
-        }
     }
 }

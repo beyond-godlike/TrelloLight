@@ -6,7 +6,7 @@ import com.unava.dia.trellolight.data.api.repository.BoardRepository
 
 class BoardsUseCase(private val context: Context) {
     // TODO inject board repository
-    var boardRepository: BoardRepository? = BoardRepository(context)
+    private val boardRepository: BoardRepository? = BoardRepository(context)
     fun findAllBoardsAsync(): LiveData<List<Board>>? {
         return boardRepository?.getBoards()
     }
