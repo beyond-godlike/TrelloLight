@@ -1,36 +1,25 @@
 package com.unava.dia.trellolight.data
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.unava.dia.trellolight.data.api.repository.BoardRepository
 import com.unava.dia.trellolight.data.api.repository.TaskRepository
+import javax.inject.Inject
 
-class TaskUseCase(private val context: Context) {
-    // TODO inject board repository & task repository
-    private val boardRepository: BoardRepository? = BoardRepository(context)
-    private val taskRepository: TaskRepository? = TaskRepository(context)
+class TaskUseCase @Inject constructor(private var taskRepository: TaskRepository) {
 
-    fun findAllTasksAsync(): LiveData<List<Task>>?{
-        return  taskRepository!!.getTasks()
+    fun getTask(id: Int): LiveData<Task> {
+        return taskRepository.getTask(id)
     }
 
-    fun getBoard(id: Int): LiveData<Board> {
-        return boardRepository!!.getBoard(id)
+    fun deleteTask(id: Int) {
+        taskRepository.deleteTask(id)
     }
 
-    fun deleteBoard(id: Int) {
-        boardRepository!!.deleteBoard(id)
+    fun updateTask(task: Task) {
+        taskRepository.updateTask(task)
     }
 
-    fun updateBoard(board: Board) {
-        boardRepository!!.updateBoard(board)
+    fun insertTask(task: Task) {
+        taskRepository.insertTask(task)
     }
 
-    fun insertBoard(board: Board) {
-        boardRepository!!.insertBoard(board)
-    }
-
-    fun findRepositoriesForTask(boardId: Int): LiveData<List<Task>>? {
-        return taskRepository!!.findRepositoriesForTask(boardId)
-    }
 }

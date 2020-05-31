@@ -1,6 +1,5 @@
 package com.unava.dia.trellolight.ui.board
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -39,23 +38,26 @@ class BoardActivity : AppCompatActivity(),
         AndroidInjection.inject(this)
         // should be before bindViewModel()
         boardId = intent.getIntExtra(BOARD_ID, 0)
-        this.bindViewModel()
         setupRecyclerView()
+        this.bindViewModel()
 
         btAddCard.setOnClickListener {
+            // save board if new
+            if (intent.getBooleanExtra(NEW_BOARD, false)) {
+                viewModel.insertBoard(etBoardName!!.text.toString())
+                //TODO set boardId
+            }
             val intent = Intent(this@BoardActivity, TaskActivity::class.java)
             intent.putExtra(BOARD_ID, boardId!!)
-            startActivityForResult(intent, Activity.RESULT_OK)
+            startActivity(intent)
         }
         btDeleteBoard.setOnClickListener {
             viewModel.deleteBoard(boardId!!)
-            setResult(Activity.RESULT_OK, intent)
             finish()
         }
         btSaveBoard.setOnClickListener {
             if (intent.getBooleanExtra(NEW_BOARD, false)) {
                 viewModel.insertBoard(etBoardName!!.text.toString())
-                setResult(Activity.RESULT_OK, intent)
                 finish()
             } else {
                 viewModel.getBoard(boardId!!).observe(this,
@@ -63,7 +65,6 @@ class BoardActivity : AppCompatActivity(),
                         if (b != null) {
                             b.title = etBoardName!!.text.toString()
                             viewModel.updateBoard(b)
-                            setResult(Activity.RESULT_OK, intent)
                             finish()
                         }
                     }
@@ -86,13 +87,12 @@ class BoardActivity : AppCompatActivity(),
                     }
                 }
             )
-            viewModel.findReposForTask(boardId!!)?.observe(this, Observer<List<Task>> { task ->
-                if (task != null) {
-                    updateTaskList(task)
-                }
+            // TODO wants boardId = intent.getIntExtra(BOARD_ID, 0)
+            viewModel.findReposForTask(boardId!!)?.observe(this, Observer<List<Task>> { taskList ->
+                updateTaskList(taskList)
             })
         }
-        else Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupRecyclerView() {
@@ -116,6 +116,6 @@ class BoardActivity : AppCompatActivity(),
         val task = tasksListAdapter!!.getItem(position)
         intent.putExtra(TASK_ID, task.id)
         intent.putExtra(BOARD_ID, boardId)
-        startActivityForResult(intent, Activity.RESULT_OK)
+        startActivity(intent)
     }
 }

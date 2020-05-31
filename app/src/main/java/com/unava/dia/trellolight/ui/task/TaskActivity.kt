@@ -1,13 +1,11 @@
 package com.unava.dia.trellolight.ui.task
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Task
-import com.unava.dia.trellolight.data.api.repository.TaskRepository
 import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.utils.AppConstants.Companion.TASK_ID
 import dagger.android.AndroidInjection
@@ -24,50 +22,41 @@ class TaskActivity : AppCompatActivity() {
     private var boardId = 0
     private var taskfId = 0
 
-    private var taskRepository: TaskRepository? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
         AndroidInjection.inject(this)
-        this.bindViewModel()
-
-        taskRepository = TaskRepository(applicationContext)
 
         boardId = intent.getIntExtra(BOARD_ID, 0)
         taskfId = intent.getIntExtra(TASK_ID, 0)
 
-        updateTask()
+        this.bindViewModel()
 
         btDelete.setOnClickListener {
-            taskRepository!!.deleteTask(taskfId)
-            setResult(Activity.RESULT_OK, intent)
+            this.viewModel.deleteTask(taskfId)
             finish()
         }
         btDone.setOnClickListener {
             if (taskfId == 0) {
-                taskRepository!!.insertTask(
+                this.viewModel.insertTask(
                     Task(
                         etTitle!!.text.toString(),
                         etDesc!!.text.toString(),
                         boardId
                     )
                 )
-                setResult(Activity.RESULT_OK, intent)
-                finish()
             } else {
-                taskRepository!!.getTask(taskfId)?.observe(this,
+                this.viewModel.getTask(taskfId).observe(this,
                     Observer<Task> { t ->
                         if (t != null) {
                             t.title = etTitle!!.text.toString()
                             t.description = etDesc!!.text.toString()
-                            taskRepository!!.updateTask(t)
-                            setResult(Activity.RESULT_OK, intent)
-                            finish()
+                            viewModel.updateTask(t)
                         }
                     }
                 )
             }
+            finish()
         }
     }
 
@@ -77,11 +66,7 @@ class TaskActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        // TODO not implemented in this version
-    }
-
-    private fun updateTask() {
-        taskRepository!!.getTask(taskfId)?.observe(this,
+        this.viewModel.getTask(taskfId).observe(this,
             Observer<Task> { task ->
                 if (task != null) {
                     etTitle!!.setText(task.title)
@@ -90,10 +75,4 @@ class TaskActivity : AppCompatActivity() {
             }
         )
     }
-
-    /* LEGACY do not delete
-    private fun insertTaskEx() {
-        taskRepository!!.insertTask(Task(" task title", "task.description", boardId))
-    }
-     */
 }

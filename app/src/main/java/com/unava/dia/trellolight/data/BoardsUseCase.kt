@@ -1,13 +1,11 @@
 package com.unava.dia.trellolight.data
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.unava.dia.trellolight.data.api.repository.BoardRepository
+import javax.inject.Inject
 
-class BoardsUseCase(private val context: Context) {
-    // TODO inject board repository
-    private val boardRepository: BoardRepository? = BoardRepository(context)
+class BoardsUseCase @Inject constructor(private var boardRepository: BoardRepository) {
     fun findAllBoardsAsync(): LiveData<List<Board>>? {
-        return boardRepository?.getBoards()
+        return boardRepository.getBoards()
     }
 }

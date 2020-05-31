@@ -1,10 +1,8 @@
 package com.unava.dia.trellolight.ui.main
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity(),
         fab.setOnClickListener {
             val intent = Intent(this@MainActivity, BoardActivity::class.java)
             intent.putExtra(NEW_BOARD, true)
-            startActivityForResult(intent, Activity.RESULT_OK)
+            startActivity(intent)
         }
     }
 
@@ -80,6 +78,6 @@ class MainActivity : AppCompatActivity(),
         val intent = Intent(this, BoardActivity::class.java)
         val board = boardsListAdapter!!.getItem(position)
         intent.putExtra(BOARD_ID, board.id)
-        startActivityForResult(intent, Activity.RESULT_OK)
+        startActivity(intent)
     }
 }
