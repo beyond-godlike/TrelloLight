@@ -1,4 +1,4 @@
-package com.unava.dia.trellolight.di.network
+package com.unava.dia.trellolight.di.room
 
 import android.app.Application
 import android.content.Context

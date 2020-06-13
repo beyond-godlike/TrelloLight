@@ -9,25 +9,24 @@ class TasksUseCase @Inject constructor(
     private var boardRepository: BoardRepository,
     private var taskRepository: TaskRepository
 ) {
+    fun getTask(id: Int): LiveData<Task> {
+        return taskRepository.getTask(id)
+    }
+
+    fun deleteTask(id: Int) {
+        taskRepository.deleteTask(id)
+    }
+
+    fun updateTask(task: Task) {
+        taskRepository.updateTask(task)
+    }
+
+    fun insertTask(task: Task) {
+        taskRepository.insertTask(task)
+    }
 
     fun findAllTasksAsync(): LiveData<List<Task>>? {
         return taskRepository.getTasks()
-    }
-
-    fun getBoard(id: Int): LiveData<Board> {
-        return boardRepository.getBoard(id)
-    }
-
-    fun deleteBoard(id: Int) {
-        boardRepository.deleteBoard(id)
-    }
-
-    fun updateBoard(board: Board) {
-        boardRepository.updateBoard(board)
-    }
-
-    fun insertBoard(board: Board) {
-        boardRepository.insertBoard(board)
     }
 
     fun findRepositoriesForTask(boardId: Int): LiveData<List<Task>>? {

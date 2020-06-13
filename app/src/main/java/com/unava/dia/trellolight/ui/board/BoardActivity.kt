@@ -38,17 +38,20 @@ class BoardActivity : AppCompatActivity(),
         AndroidInjection.inject(this)
         // should be before bindViewModel()
         boardId = intent.getIntExtra(BOARD_ID, 0)
+        //Toast.makeText(this, boardId.toString(), Toast.LENGTH_SHORT).show()
         setupRecyclerView()
         this.bindViewModel()
 
         btAddCard.setOnClickListener {
             // save board if new
+            val board = Board(etBoardName!!.text.toString())
+            //boardId = board.id
+            Toast.makeText(this, boardId.toString(), Toast.LENGTH_SHORT).show()
             if (intent.getBooleanExtra(NEW_BOARD, false)) {
-                viewModel.insertBoard(etBoardName!!.text.toString())
-                //TODO set boardId
+                viewModel.insertBoard(board)
             }
             val intent = Intent(this@BoardActivity, TaskActivity::class.java)
-            intent.putExtra(BOARD_ID, boardId!!)
+            intent.putExtra(BOARD_ID, board.id)
             startActivity(intent)
         }
         btDeleteBoard.setOnClickListener {
@@ -87,12 +90,12 @@ class BoardActivity : AppCompatActivity(),
                     }
                 }
             )
-            // TODO wants boardId = intent.getIntExtra(BOARD_ID, 0)
+            // TODO wants boardId = intent.getIntExtra(BOARD_ID, 0) ?
             viewModel.findReposForTask(boardId!!)?.observe(this, Observer<List<Task>> { taskList ->
                 updateTaskList(taskList)
             })
         }
-        Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
+        else Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupRecyclerView() {

@@ -8,4 +8,20 @@ class BoardsUseCase @Inject constructor(private var boardRepository: BoardReposi
     fun findAllBoardsAsync(): LiveData<List<Board>>? {
         return boardRepository.getBoards()
     }
+
+    fun getBoard(id: Int): LiveData<Board> {
+        return boardRepository.getBoard(id)
+    }
+
+    fun deleteBoard(id: Int) {
+        boardRepository.deleteBoard(id)
+    }
+
+    fun updateBoard(board: Board) {
+        boardRepository.updateBoard(board)
+    }
+
+    fun insertBoard(board: Board) {
+        boardRepository.insertBoard(board)
+    }
 }

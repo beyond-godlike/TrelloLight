@@ -25,6 +25,10 @@ class BoardViewModel @Inject constructor(
     fun insertBoard(text: String) {
         model.insertBoard(text)
     }
+
+    fun insertBoard(board: Board) {
+        model.insertBoard(board)
+    }
     fun findReposForTask (boardId: Int) = model.findReposForTask(boardId)
 
 }

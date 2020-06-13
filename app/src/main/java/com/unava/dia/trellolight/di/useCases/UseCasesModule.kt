@@ -1,8 +1,6 @@
 package com.unava.dia.trellolight.di.useCases
 
-import android.content.Context
 import com.unava.dia.trellolight.data.BoardsUseCase
-import com.unava.dia.trellolight.data.TaskUseCase
 import com.unava.dia.trellolight.data.TasksUseCase
 import com.unava.dia.trellolight.data.api.repository.BoardRepository
 import com.unava.dia.trellolight.data.api.repository.TaskRepository
@@ -22,11 +20,5 @@ class UseCasesModule {
     @Provides
     fun provideTasksUseCase(boardRepository: BoardRepository, taskRepository: TaskRepository): TasksUseCase {
         return TasksUseCase(boardRepository, taskRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideTaskUseCase(taskRepository: TaskRepository): TaskUseCase {
-        return TaskUseCase(taskRepository)
     }
 }

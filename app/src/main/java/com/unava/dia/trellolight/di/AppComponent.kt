@@ -2,7 +2,7 @@ package com.unava.dia.trellolight.di
 
 import android.app.Application
 import com.unava.dia.trellolight.TrelloLightApp
-import com.unava.dia.trellolight.di.network.RoomModule
+import com.unava.dia.trellolight.di.room.RoomModule
 import com.unava.dia.trellolight.di.useCases.UseCasesModule
 import com.unava.dia.trellolight.di.viewModel.ViewModelModule
 import dagger.BindsInstance
