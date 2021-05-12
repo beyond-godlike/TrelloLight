@@ -25,13 +25,12 @@ class BoardRepository(context: Context) {
         return@runBlocking async { db.boardDao().getBoardAsync(id) }.await()
     }
 
-
     fun insertBoard(title: String) {
         scope.launch  { db.boardDao().insertBoard(Board(title)) }
     }
 
-    fun insertBoard(board: Board) {
-        scope.launch  { db.boardDao().insertBoard(board) }
+    fun insertBoard(board: Board) : Long? = runBlocking(Dispatchers.Default) {
+        return@runBlocking async { db.boardDao().insertBoard(board) }.await()
     }
 
     fun updateBoard(board: Board) {

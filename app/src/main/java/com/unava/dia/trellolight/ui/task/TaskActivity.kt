@@ -34,6 +34,7 @@ class TaskActivity : AppCompatActivity() {
 
         btDelete.setOnClickListener {
             this.viewModel.deleteTask(taskfId)
+            setResult(RESULT_OK, intent)
             finish()
         }
         btDone.setOnClickListener {
@@ -56,6 +57,7 @@ class TaskActivity : AppCompatActivity() {
                     }
                 )
             }
+            setResult(RESULT_OK, intent)
             finish()
         }
     }

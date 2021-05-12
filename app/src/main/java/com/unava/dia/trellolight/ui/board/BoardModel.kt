@@ -25,12 +25,12 @@ class BoardModel @Inject constructor(private var tasksUseCase: TasksUseCase, pri
         this.boardsUseCase.updateBoard(board)
     }
 
-    fun insertBoard(text: String) {
-        this.boardsUseCase.insertBoard(Board(text))
+    fun insertBoard(text: String) : Long? {
+        return this.boardsUseCase.insertBoard(Board(text))
     }
 
-    fun insertBoard(board: Board) {
-        this.boardsUseCase.insertBoard(board)
+    fun insertBoard(board: Board) : Long? {
+        return this.boardsUseCase.insertBoard(board)
     }
 
     fun findReposForTask(boardId: Int) : LiveData<List<Task>>? {

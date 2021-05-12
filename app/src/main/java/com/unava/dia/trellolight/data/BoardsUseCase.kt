@@ -21,7 +21,7 @@ class BoardsUseCase @Inject constructor(private var boardRepository: BoardReposi
         boardRepository.updateBoard(board)
     }
 
-    fun insertBoard(board: Board) {
-        boardRepository.insertBoard(board)
+    fun insertBoard(board: Board) : Long? {
+        return boardRepository.insertBoard(board)
     }
 }

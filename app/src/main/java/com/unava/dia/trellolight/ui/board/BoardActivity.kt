@@ -1,5 +1,6 @@
 package com.unava.dia.trellolight.ui.board
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.unava.dia.trellolight.R
 import com.unava.dia.trellolight.data.Board
 import com.unava.dia.trellolight.data.Task
 import com.unava.dia.trellolight.ui.task.TaskActivity
+import com.unava.dia.trellolight.utils.AppConstants.Companion.ACTIVITY_REQUEST_CODE
 import com.unava.dia.trellolight.utils.AppConstants.Companion.BOARD_ID
 import com.unava.dia.trellolight.utils.AppConstants.Companion.NEW_BOARD
 import com.unava.dia.trellolight.utils.AppConstants.Companion.TASK_ID
@@ -30,6 +32,7 @@ class BoardActivity : AppCompatActivity(),
     lateinit var viewModel: BoardViewModel
 
     private var boardId: Int? = null
+    private var isNewBoard: Boolean = false
     private var tasksListAdapter: TasksListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,29 +41,27 @@ class BoardActivity : AppCompatActivity(),
         AndroidInjection.inject(this)
         // should be before bindViewModel()
         boardId = intent.getIntExtra(BOARD_ID, 0)
-        //Toast.makeText(this, boardId.toString(), Toast.LENGTH_SHORT).show()
+        isNewBoard = intent.getBooleanExtra(NEW_BOARD, false)
         setupRecyclerView()
         this.bindViewModel()
 
         btAddCard.setOnClickListener {
-            // save board if new
-            val board = Board(etBoardName!!.text.toString())
-            //boardId = board.id
-            Toast.makeText(this, boardId.toString(), Toast.LENGTH_SHORT).show()
-            if (intent.getBooleanExtra(NEW_BOARD, false)) {
-                viewModel.insertBoard(board)
+            if (isNewBoard) {
+                boardId = viewModel.addBoard(etBoardName!!.text.toString())
+                isNewBoard = false
             }
+
             val intent = Intent(this@BoardActivity, TaskActivity::class.java)
-            intent.putExtra(BOARD_ID, board.id)
-            startActivity(intent)
+            intent.putExtra(BOARD_ID, boardId!!)
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE)
         }
         btDeleteBoard.setOnClickListener {
             viewModel.deleteBoard(boardId!!)
             finish()
         }
         btSaveBoard.setOnClickListener {
-            if (intent.getBooleanExtra(NEW_BOARD, false)) {
-                viewModel.insertBoard(etBoardName!!.text.toString())
+            if (isNewBoard) {
+                viewModel.addBoard(etBoardName!!.text.toString())
                 finish()
             } else {
                 viewModel.getBoard(boardId!!).observe(this,
@@ -82,7 +83,10 @@ class BoardActivity : AppCompatActivity(),
     }
 
     private fun observeViewModel() {
-        if(boardId != null) {
+        viewModel.error.observe(this, Observer<String> {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
+        if (boardId != null) {
             viewModel.getBoard(boardId!!).observe(this,
                 Observer<Board> { b ->
                     if (b != null) {
@@ -90,12 +94,10 @@ class BoardActivity : AppCompatActivity(),
                     }
                 }
             )
-            // TODO wants boardId = intent.getIntExtra(BOARD_ID, 0) ?
             viewModel.findReposForTask(boardId!!)?.observe(this, Observer<List<Task>> { taskList ->
                 updateTaskList(taskList)
             })
-        }
-        else Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, " board id is null", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupRecyclerView() {
@@ -119,6 +121,15 @@ class BoardActivity : AppCompatActivity(),
         val task = tasksListAdapter!!.getItem(position)
         intent.putExtra(TASK_ID, task.id)
         intent.putExtra(BOARD_ID, boardId)
-        startActivity(intent)
+        startActivityForResult(intent, ACTIVITY_REQUEST_CODE)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // because finish() doesn`t works properly. I`ts shitty yep
+            this.recreate()
+        }
     }
 }

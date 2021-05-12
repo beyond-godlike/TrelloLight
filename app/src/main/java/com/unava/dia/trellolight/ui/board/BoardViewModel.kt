@@ -1,6 +1,8 @@
 package com.unava.dia.trellolight.ui.board
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.unava.dia.trellolight.data.Board
 import javax.inject.Inject
@@ -10,9 +12,16 @@ class BoardViewModel @Inject constructor(
     private val model: BoardModel
 ) : ViewModel(){
 
+    val error: MutableLiveData<String> = MutableLiveData()
+
     fun getTasks() = model.findAllTasks()
 
     fun getBoard(id: Int) = model.findBoard(id)
+
+    fun addBoard(boardName: String) : Int? {
+        val id = model.insertBoard(boardName)
+        return id?.toInt()
+    }
 
     fun deleteBoard(id: Int) {
         model.deleteBoard(id)
@@ -26,9 +35,6 @@ class BoardViewModel @Inject constructor(
         model.insertBoard(text)
     }
 
-    fun insertBoard(board: Board) {
-        model.insertBoard(board)
-    }
     fun findReposForTask (boardId: Int) = model.findReposForTask(boardId)
 
 }

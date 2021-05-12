@@ -5,5 +5,6 @@ interface AppConstants {
         val BOARD_ID = "boardId"
         val TASK_ID = "taskId"
         val NEW_BOARD = "newBoard"
+        val ACTIVITY_REQUEST_CODE = 228
     }
 }
